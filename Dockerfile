@@ -10,10 +10,11 @@ RUN  apt-get update                                                          &&\
 COPY keyboard /etc/default/keyboard
 RUN  apt-get install -y --no-install-recommends mesa-utils                     \
                                                 xserver-xorg-video-all         \ 
-                                                libsdl2-dev 
+                                                libsdl2-dev                    \
+                                                gcc
 
 #Install Python
-RUN  apt-get install -y --no-install-recommends python3                        \
+RUN  apt-get install -y --no-install-recommends python3-dev                    \
                                                 python3-pip
                  
 #Install Cython
