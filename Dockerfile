@@ -3,7 +3,7 @@
 FROM ubuntu
 MAINTAINER github/briannoyama
 
-RUN  apt-get update                                                          &&\ 
+RUN  apt-get update --fix-missing                                            &&\ 
      apt-get install -y --no-install-recommends apt-utils
 
 #Install opengl
@@ -11,6 +11,10 @@ COPY keyboard /etc/default/keyboard
 RUN  apt-get install -y --no-install-recommends mesa-utils                     \
                                                 xserver-xorg-video-all         \ 
                                                 libsdl2-dev                    \
+                                                libsdl2-image-dev              \
+                                                libsdl2-mixer-dev              \
+                                                libsdl2-net-dev                \
+                                                libsdl2-ttf-dev                \
                                                 gcc
 
 #Install Python
