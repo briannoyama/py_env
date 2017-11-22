@@ -21,9 +21,10 @@ RUN  apt-get install -y --no-install-recommends mesa-utils                     \
 RUN  apt-get install -y --no-install-recommends python3-dev                    \
                                                 python3-pip
                  
-#Install Cython
-RUN  pip3 install Cython
-
+#Install Cython and PyYaml
+RUN  pip3 install --upgrade pip setuptools                                   &&\
+     pip3 install           Cython                                             \
+                            numpy
 
 #Install vim
 RUN  apt-get install -y --no-install-recommends vim curl git
@@ -37,10 +38,15 @@ RUN  mkdir -p ~/.vim/colors ~/.vim/autoload ~/.vim/bundle ~/.vim/ftplugin    &&\
      git clone --recursive --depth=1 git://github.com/davidhalter/jedi-vim.git &&\
      rm -R jedi-vim/.git
 
+RUN  apt-get install -y dbus                                                 &&\
+     dbus-uuidgen > /etc/machine-id
+
 COPY .vimrc /root/.vimrc
 
 #Get other development related software
 RUN apt-get install -y --no-install-recommends tmux
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.5 2 &&\
+    update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1
 
 COPY entry.sh /usr/local/bin/entry.sh
 ENTRYPOINT ["entry.sh"]
